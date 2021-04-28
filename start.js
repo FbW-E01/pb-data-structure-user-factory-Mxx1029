@@ -16,12 +16,15 @@ const userDataDump = [
   "E,cron,,System",
 ];
 
+const arrayOfUserObjects = [];
+
 const createUserObjects = (userDataDump) => {
-  const arrayOfUserObjects = [];
+  // loop through array to get singleUser Arrays
   for (let i = 0; i < userDataDump.length; i++) {
     const user = {};
     const singleUser = userDataDump[i].split(",");
     // console.log(singleUser); // helper log
+    // function to get initials from fullName 
     const createInitials = (fullName) => {
       let initials = fullName[0];
       for (j = 1; j < fullName.length; j++) {
@@ -31,11 +34,13 @@ const createUserObjects = (userDataDump) => {
       }
       return initials.toUpperCase();
     };
+    // add data to user object
     user.id = singleUser[0];
     user.fullName = singleUser[1];
     user.initials = createInitials(singleUser[1]);
     user.birthYear = singleUser[2] ? singleUser[2] : "Unknown";
     user.departments = singleUser[3].split("|");
+    // push ready assembled object into result arrayOfUserObjects Array
     arrayOfUserObjects.push(user);
     // console.log(user); // helper log
   };
@@ -43,3 +48,24 @@ const createUserObjects = (userDataDump) => {
 };
 
 console.log(createUserObjects(userDataDump));
+
+const listDepartments = () => {
+  const departments = [];
+  for (let i = 0; i < arrayOfUserObjects.length; i++) {
+    const department = arrayOfUserObjects[i].departments;
+    departments.push(department.join(", "));
+  };
+  // it needs to be an array again, not a string, otherwise the loop doesn't work!
+  const arrayOfAllDepartments = departments.join(", ");
+  console.log(arrayOfAllDepartments);
+  const list = [];
+  // this needs more work --> not working yet
+  // for (j = 0; j < arrayOfAllDepartments.length; j++) {
+  //   if (list.includes(arrayOfAllDepartments[j])) {
+  //     list.push(arrayOfAllDepartments[j]);
+  //   };
+  // }
+  return list;
+};
+
+console.log(listDepartments());
