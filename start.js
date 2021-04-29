@@ -15,13 +15,11 @@ const userDataDump = [
   "D,Cheesedude51,1951,Users",
   "E,cron,,System",
 ];
-
 const arrayOfUserObjects = [];
 
 const createUserObjects = (userDataDump) => {
   // loop through array to get singleUser Arrays
   for (let i = 0; i < userDataDump.length; i++) {
-    const user = {};
     // split user strings into arrays
     const singleUser = userDataDump[i].split(",");
     // console.log(singleUser); // helper log
@@ -36,6 +34,7 @@ const createUserObjects = (userDataDump) => {
       return initials.toUpperCase();
     };
     // add data to user object
+    const user = {};
     user.id = singleUser[0];
     user.fullName = singleUser[1];
     user.initials = createInitials(singleUser[1]);
@@ -47,9 +46,9 @@ const createUserObjects = (userDataDump) => {
   };
   return arrayOfUserObjects;
 };
-
 console.log(createUserObjects(userDataDump));
 
+// bonus task
 const listDepartments = () => {
   const departments = [];
   // loop through result array from 1st function to get array with all departments and turn entries with more than one element into a string
@@ -68,8 +67,46 @@ const listDepartments = () => {
       list.push(listItem);
     };
   };
-  
+
   return list;
 };
 
 console.log(listDepartments());
+
+// write first function a second time to practice!
+const getInitials = (string) => {
+  let initials = "";
+  const nameArray = string.split(" ");
+  for (l = 0; l < nameArray.length; l++) {
+    initials += nameArray[l][0].toUpperCase();
+  };
+  return initials;
+};
+
+const getObjectArray = (input) => {
+  const objectArray = [];
+  for (k = 0; k < input.length; k++) {
+    const userEntry = input[k].split(",");    
+    const id = userEntry[0];
+    const fullName = userEntry[1];
+    const initials = getInitials(fullName);
+    const birthYear = userEntry[2] ? userEntry[2] : "Unknown";
+    const departments = userEntry[3].split("|");
+    
+    const userObject = {
+      id,
+      fullName,
+      initials,
+      birthYear,
+      departments,
+    };
+
+    objectArray.push(userObject);
+
+  }
+
+  return objectArray;
+};
+
+const result = getObjectArray(userDataDump);
+console.log(result);
