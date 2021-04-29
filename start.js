@@ -22,6 +22,7 @@ const createUserObjects = (userDataDump) => {
   // loop through array to get singleUser Arrays
   for (let i = 0; i < userDataDump.length; i++) {
     const user = {};
+    // split user strings into arrays
     const singleUser = userDataDump[i].split(",");
     // console.log(singleUser); // helper log
     // function to get initials from fullName 
@@ -51,20 +52,23 @@ console.log(createUserObjects(userDataDump));
 
 const listDepartments = () => {
   const departments = [];
+  // loop through result array from 1st function to get array with all departments and turn entries with more than one element into a string
   for (let i = 0; i < arrayOfUserObjects.length; i++) {
     const department = arrayOfUserObjects[i].departments;
-    departments.push(department.join(", "));
+    departments.push(department.join(","));
   };
-  // it needs to be an array again, not a string, otherwise the loop doesn't work!
-  const arrayOfAllDepartments = departments.join(", ");
-  console.log(arrayOfAllDepartments);
+  // first turn all entries into a string to get rid of all the inter-level arrays, than turn it into one big array arrayOfAllDepartments
+  const arrayOfAllDepartments = departments.join(",").split(",");
+  // console.log(arrayOfAllDepartments); // helper log
   const list = [];
-  // this needs more work --> not working yet
-  // for (j = 0; j < arrayOfAllDepartments.length; j++) {
-  //   if (list.includes(arrayOfAllDepartments[j])) {
-  //     list.push(arrayOfAllDepartments[j]);
-  //   };
-  // }
+  // loop through to filter out duplicates
+  for (j = 0; j < arrayOfAllDepartments.length; j++) {
+    const listItem = arrayOfAllDepartments[j];
+    if (!(list.includes(listItem))) {
+      list.push(listItem);
+    };
+  };
+  
   return list;
 };
 
